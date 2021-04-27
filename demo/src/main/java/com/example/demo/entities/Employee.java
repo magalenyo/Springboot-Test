@@ -18,6 +18,10 @@ public class Employee {
 	private String surname;
 	private LocalDate birthDate;
 	
+	// @Column(name="ColumnName
+	// @JsonIgnore para no devlver
+	// @DateTimeFormat
+	
 	public Employee() {}
 	
 	public Employee(String newName, String newSurname, LocalDate newBirthDate) {
