@@ -31,10 +31,6 @@ public class BeansConfiguration {
 		return new MessageRestControllerV4(messageService);
 	}
 	
-//	@Bean
-//	public DataRepository dataRepository() {
-//		return new DataRepository();
-//	}
 	
 	@Bean
 	public RepositoryService repositoryService(DataRepository dataRepository) {

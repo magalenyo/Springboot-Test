@@ -33,8 +33,12 @@ public class RepositoryServiceImpl implements RepositoryService {
 
 	@Override
 	public void UpdateEmployee(Employee employee) {
-		//TODO
-		
+		if (repository.existsById(employee.getId())) {
+			repository.save(employee);
+		}
+		else {
+			// ERROR TREATMENT
+		}
 	}
 
 	@Override

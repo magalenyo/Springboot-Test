@@ -22,13 +22,6 @@ public class EmployeeController {
 	}
 	
 	
-//	@GetMapping("{id}")
-//	public @ResponseBody Employee GetEmployee(@PathVariable long id) {
-////		return new Employee("a","b");
-//		return repositoryService.GetEmployee(id);
-//	}
-//	
-	
 	@RequestMapping(path="{id}", method = RequestMethod.GET)
 	public @ResponseBody Employee GetEmployee(@PathVariable long id) {
 		return repositoryService.GetEmployee(id);
