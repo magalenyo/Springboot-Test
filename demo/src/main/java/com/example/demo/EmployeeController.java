@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,16 +22,22 @@ public class EmployeeController {
 	}
 	
 	
-	@GetMapping("{id}")
+//	@GetMapping("{id}")
+//	public @ResponseBody Employee GetEmployee(@PathVariable long id) {
+////		return new Employee("a","b");
+//		return repositoryService.GetEmployee(id);
+//	}
+//	
+	
+	@RequestMapping(path="{id}", method = RequestMethod.GET)
 	public @ResponseBody Employee GetEmployee(@PathVariable long id) {
-//		return new Employee("a","b");
 		return repositoryService.GetEmployee(id);
 	}
 	
-//	@RequestMapping(path="", method = RequestMethod.GET)
-//	public @ResponseBody void GetAll() {
-//		repositoryService.GetAll();
-//	}
+	@RequestMapping(path="", method = RequestMethod.GET)
+	public @ResponseBody List<Employee> GetAll() {
+		return repositoryService.GetAll();
+	}
 	
 	@RequestMapping(path="", method = RequestMethod.PUT)
 	public @ResponseBody void AddEmployee(@RequestBody Employee employee) {
