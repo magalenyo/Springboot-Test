@@ -7,15 +7,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel(value = "Employee Entity")
 @Entity
 @Table(name = "employees")
 public class Employee {
+	@ApiModelProperty(value = "Employee Identificator")
 	@javax.persistence.Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long Id;
+	@ApiModelProperty(value = "Employee Name")
 	private String name;
+	@ApiModelProperty(value = "Employee Surname")
 	private String surname;
+	@ApiModelProperty(value = "Employee Birth Date")
 	private LocalDate birthDate;
 	
 	// @Column(name="ColumnName
