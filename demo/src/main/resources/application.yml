@@ -2,3 +2,5 @@ course:
    hello: "hello world from param"
    helloFromServiceYAML: "hello from a service YAML"
    helloFromServiceDB: "hello from a service DB"
+   
+server.servlet.context-path: /miguelapp
