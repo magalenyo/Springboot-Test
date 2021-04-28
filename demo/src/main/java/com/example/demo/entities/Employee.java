@@ -14,15 +14,15 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name = "employees")
 public class Employee {
-	@ApiModelProperty(value = "Employee Identificator")
 	@javax.persistence.Id
+	@ApiModelProperty(value = "Employee Identificator")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long Id;
 	@ApiModelProperty(value = "Employee Name")
 	private String name;
 	@ApiModelProperty(value = "Employee Surname")
 	private String surname;
-	@ApiModelProperty(value = "Employee Birth Date")
+	@ApiModelProperty(value = "Employee Birth Date yyyy-mm-dd", example = "1996-10-20")
 	private LocalDate birthDate;
 	
 	// @Column(name="ColumnName

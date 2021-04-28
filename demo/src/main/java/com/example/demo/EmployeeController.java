@@ -15,6 +15,7 @@ import com.example.demo.interfaces.RepositoryService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -28,31 +29,38 @@ public class EmployeeController {
 		repositoryService = newRepositoryService;
 	}
 	
-	@ApiOperation(value = "Fetch all tags employees value")
+	@ApiOperation(value = "Fetch an Employee by ID")
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "Employees recovered", response = Employee.class)
+		@ApiResponse(code = 200, message = "Employee recovered", response = Employee.class)
 	})
 	@RequestMapping(path="{id}", method = RequestMethod.GET)
 	public @ResponseBody Employee GetEmployee(@PathVariable long id) {
 		return repositoryService.GetEmployee(id);
 	}
 	
+	@ApiOperation(value = "Fetch all Employee")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "Employees recovered", response = Employee.class, responseContainer = "List")
+	})
 	@RequestMapping(path="", method = RequestMethod.GET)
 	public @ResponseBody List<Employee> GetAll() {
 		return repositoryService.GetAll();
 	}
 	
+	@ApiOperation(value = "Creates a new Employee")
 	@RequestMapping(path="", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody void AddEmployee(@RequestBody Employee employee) {
 		repositoryService.CreateEmployee(employee);
 	}
 	
+	@ApiOperation(value = "Deletes an Employee by ID")
 	@RequestMapping(path="{id}", method = RequestMethod.DELETE)
-	public @ResponseBody void DeleteEmployee(@PathVariable long id) {
+	public @ResponseBody void DeleteEmployee(@PathVariable @ApiParam(value="ID of the Employee") long id) {
 		repositoryService.DeleteEmployee(id);
 	}
 	
+	@ApiOperation(value = "Updates an Employee")
 	@RequestMapping(path="", method = RequestMethod.PUT)
 	public @ResponseBody void UpdateEmployee(@RequestBody Employee employee) {
 		repositoryService.UpdateEmployee(employee);
