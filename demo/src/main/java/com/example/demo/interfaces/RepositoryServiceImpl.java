@@ -33,10 +33,15 @@ public class RepositoryServiceImpl implements RepositoryService {
 
 	@Override
 	public void UpdateEmployee(Employee employee) {
+		
+		if (employee.getName().isEmpty() || employee.getBirthDate() == null) {
+			throw new IllegalArgumentException("Could not update Employee", new Throwable("Name or BirthDate was empty"));
+		}
 		if (repository.existsById(employee.getId())) {
 			repository.save(employee);
 		}
 		else {
+			throw new IndexOutOfBoundsException("Employee ID: " + employee.getId() + " could not be found");
 			// ERROR TREATMENT
 		}
 	}
