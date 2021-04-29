@@ -1,7 +1,9 @@
 package com.example.demo;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,9 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.example.demo.apis.EmployeeRestAPI;
 import com.example.demo.entities.Employee;
 import com.example.demo.interfaces.RepositoryService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import feign.Feign;
+import feign.httpclient.ApacheHttpClient;
+import feign.jackson.JacksonDecoder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -35,7 +44,8 @@ public class EmployeeController {
 	})
 	@RequestMapping(path="{id}", method = RequestMethod.GET)
 	public @ResponseBody Employee GetEmployee(@PathVariable long id) {
-		return repositoryService.GetEmployee(id);
+//		return repositoryService.GetEmployee(id);
+		return new Employee("hola","miguel", LocalDate.now());
 	}
 	
 	@ApiOperation(value = "Fetch all Employee")
@@ -64,6 +74,20 @@ public class EmployeeController {
 	@RequestMapping(path="", method = RequestMethod.PUT)
 	public @ResponseBody void UpdateEmployee(@RequestBody Employee employee) {
 		repositoryService.UpdateEmployee(employee);
+	}
+	
+	@RequestMapping(path="/v2/{id}", method = RequestMethod.GET)
+	public @ResponseBody Employee GetEmployee2(@PathVariable long id) {
+		ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModules(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        
+		EmployeeRestAPI employeeApi = Feign.builder()
+									  .client(new ApacheHttpClient())
+									  .decoder(new JacksonDecoder(mapper))
+									  .contract(new SpringMvcContract())
+									  .target(EmployeeRestAPI.class, "http://localhost:8090/miguelapp");
+		return employeeApi.GetEmployee(id);
 	}
 	
 }

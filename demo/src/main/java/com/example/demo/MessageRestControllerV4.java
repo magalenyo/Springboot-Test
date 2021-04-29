@@ -24,4 +24,5 @@ public class MessageRestControllerV4 {
 	public @ResponseBody String helloFromService() {
 		return messageService.GetMessage();
 	} 
+	
 }
